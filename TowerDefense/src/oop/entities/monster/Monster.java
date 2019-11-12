@@ -16,7 +16,7 @@ import oop.roadmap.RoadMapLv1;
  */
 public abstract class Monster {
     public int heath;
-    public int money;
+    private int money;
     public float x, y;
     protected Handler handler;
     public static int width = 64, height = 64;
@@ -27,7 +27,7 @@ public abstract class Monster {
     public float speed;
     public float xMove = 0, yMove = 0;
 
-    public Monster(float x, float y, Handler handler, int lvWord, int Damge, float speed, int heath) {
+    public Monster(float x, float y, Handler handler, int lvWord, int Damge, float speed, int heath, int money) {
         this.x = x;
         this.y = y;
         this.handler = handler;
@@ -35,6 +35,7 @@ public abstract class Monster {
         this.Damege = Damge;
         this.speed = speed;
         this.heath = heath;
+        this.money = money;
     }
     
     public abstract void tick();
@@ -55,6 +56,10 @@ public abstract class Monster {
 
     public void setDamege(int Damege) {
         this.Damege = Damege;
+    }
+
+    public int getMoney() {
+        return money;
     }
     
     

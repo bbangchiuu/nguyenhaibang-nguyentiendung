@@ -24,7 +24,7 @@ public class BatMonster extends Monster {
     protected RoadMap roadMap = new RoadMapLv1(this);
 
     public BatMonster(float x, float y, Handler handler, int lvWord) {
-        super(x, y, handler, lvWord, 10, (float) 1, 100);
+        super(x, y, handler, lvWord, 10, (float) 1, 1000, 10);
 
         animLeft = new Animation(500, Assets.batMonterLeft);
         animUp = new Animation(500, Assets.batMonsterUp);

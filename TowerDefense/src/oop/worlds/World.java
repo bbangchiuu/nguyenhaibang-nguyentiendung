@@ -72,27 +72,25 @@ public class World {
         timeDown = new Thread() {
             @Override
             public void run() {
-                int count = 2;
+                int count = 10;
                 for (time = count; time > 0; time--) {;
                     try {
                         Thread.sleep(1000);
-                        System.out.println("i: " + time);
+                        //System.out.println("i: " + time);
                     } catch (InterruptedException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
 
                 }
-                System.out.println("Hết giờ, Game chạy");
+                //System.out.println("Hết giờ, Game chạy");
                 if (time <= 0) {
                     countDownThread = new CountDownThread();
-                    countDownThread.start();
-                    this.stop();                   
+                    countDownThread.start();                  
                 }
             }
         };
         timeDown.start();
-
     }
 
     public void addTower(Tower tower) {
@@ -104,6 +102,7 @@ public class World {
         this.player.tick();
         //uiManager.tick();
         this.monsterManager.tick();
+        Collision();
     }
 
     public void render(Graphics g) {
@@ -160,6 +159,40 @@ public class World {
 
     }
 
+    private void Collision(){
+        for (int i = 0; i < towerManager.getTowers().size(); i++) {
+            for (int j = 0; j < monsterManager.getListMonsters().size(); j++) {
+                if(CollisionX(i, j) && CollisionY(i, j)){
+                    if(towerManager.getTowers().get(i).getEffect() == 1){
+                        monsterManager.getListMonsters().get(j).speed = (float) 0.3;
+                    }
+                    monsterManager.getListMonsters().get(j).heath -= towerManager.getTowers().get(i).getDamege();
+                    if(monsterManager.getListMonsters().get(j).heath <= 0){
+                        player.money += monsterManager.getListMonsters().get(j).getMoney();
+                        monsterManager.getListMonsters().remove(j);
+                    }                   
+                    break;
+                }
+            }
+        }
+    }
+    
+    public boolean CollisionX(int i, int j){
+        if(monsterManager.getListMonsters().get(j).x + Monster.width/2 >= towerManager.getTowers().get(i).NearestRangeX()
+                && monsterManager.getListMonsters().get(j).x <= towerManager.getTowers().get(i).FurthestRangeX()){
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean CollisionY(int i, int j){
+        if(monsterManager.getListMonsters().get(j).y + Monster.height/2 >= towerManager.getTowers().get(i).NearestRangeY()
+                && monsterManager.getListMonsters().get(j).y <= towerManager.getTowers().get(i).FurthestRangeY()){
+            return true;
+        }
+        return false;
+    }
+    
     public int getWidth() {
         return width;
     }
@@ -172,21 +205,19 @@ public class World {
 
         @Override
         public void run() {
-            int count = 10;
+            int count = 20;
             for (int i = count; i > 0; i--) {
-                System.out.println(i);
                 try {
                     Monster monster = new BatMonster(0, 510, handler, lvWord);
                     monsterManager.addMonster(monster);
 
-                    Thread.sleep(2000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }
-            System.out.println("Chạy hết quái");
-
+//            System.out.println("Chạy hết quái");
         }
     }
 }

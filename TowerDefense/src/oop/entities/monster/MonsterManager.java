@@ -15,6 +15,7 @@ import oop.entities.Player;
  * @author ASUS
  */
 public class MonsterManager {
+
     private Handler handler;
     private ArrayList<Monster> listMonsters;
     private Player player;
@@ -24,8 +25,8 @@ public class MonsterManager {
         this.player = player;
         listMonsters = new ArrayList<>();
     }
-    
-    public void addMonster(Monster monster){
+
+    public void addMonster(Monster monster) {
         listMonsters.add(monster);
     }
 
@@ -44,25 +45,24 @@ public class MonsterManager {
     public void setListMonsters(ArrayList<Monster> listMonsters) {
         this.listMonsters = listMonsters;
     }
-    
-    public void tick(){
+
+    public void tick() {
         for (int i = 0; i < listMonsters.size(); i++) {
-            if(!listMonsters.get(i).StatusLive || listMonsters.get(i).StatusFinish){
-                if(listMonsters.get(i).StatusFinish){
-                    this.player.health -= listMonsters.get(i).getDamege();
-                    if(this.player.health <= 0){
-                        this.player.StatusLive = false;
-                    }
+
+            if (listMonsters.get(i).StatusFinish) {
+                this.player.health -= listMonsters.get(i).getDamege();
+                if (this.player.health <= 0) {
+                    this.player.StatusLive = false;
                 }
-                listMonsters.remove(i);               
-            }else{
+                listMonsters.remove(i);
+            } else {
                 listMonsters.get(i).tick();
             }
-            
+
         }
     }
-    
-    public void render(Graphics g){
+
+    public void render(Graphics g) {
         for (Monster monster : listMonsters) {
             monster.render(g);
         }

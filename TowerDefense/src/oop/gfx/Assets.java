@@ -14,7 +14,7 @@ public class Assets {
 	public static BufferedImage dirt, grass, stone, tree, rock;
 	public static BufferedImage wood;
 	public static BufferedImage[] btn_start;
-        public static BufferedImage towerBasic, menuIMG;
+        public static BufferedImage towerBasic, towerFrozen, menuIMG;
         public static BufferedImage selectTower;
         
         public static BufferedImage[] batMonterLeft, batMonsterUp, batMonsterDown, batMonsterRight;
@@ -30,6 +30,7 @@ public class Assets {
                 SpriteSheet menu = new SpriteSheet(ImageLoader.loadImage("/textures/TowerMenuGraphic2.png"));
                 
                 SpriteSheet towerBS = new SpriteSheet(ImageLoader.loadImage("/tower/SniperTowerGraphic.png"));
+                SpriteSheet towerFZ = new SpriteSheet(ImageLoader.loadImage("/tower/FreezeTowerGraphic.png"));
                 
                 SpriteSheet select = new SpriteSheet(ImageLoader.loadImage("/tower/SellSelectGraphic.png"));
                 
@@ -47,6 +48,7 @@ public class Assets {
                 
                 menuIMG = menu.crop(0, 0, 300, 190);
                 towerBasic = towerBS.crop(0, 0, 36, 31);
+                towerFrozen = towerFZ.crop(0, 0, 33, 26);
                 selectTower = select.crop(0, 0, 38, 38);
                 
                 batMonsterDown = new BufferedImage[3];

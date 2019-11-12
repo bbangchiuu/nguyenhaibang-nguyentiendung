@@ -19,7 +19,7 @@ import javafx.beans.property.DoubleProperty;
 public class TowerBasic extends Tower {
 
     public TowerBasic(Handler handler, float x, float y) {
-        super(handler, x, y, 10);
+        super(handler, x, y, 10, 2, 0);
         
         radius.setCenterX(130);
         radius.setCenterY(120);
@@ -32,8 +32,9 @@ public class TowerBasic extends Tower {
 
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.LIGHT_GRAY);
-        g.fillOval((int) (x - radius.getCenterX()),(int) (y - radius.getCenterY()),(int) radius.getRadius(),(int) radius.getRadius());
+        //g.drawRect((int)x, (int)y, 10, 10);
+        //g.setColor(Color.LIGHT_GRAY);
+        //g.fillRect((int) (x - radius.getCenterX()),(int) (y - radius.getCenterY()),(int) radius.getRadius(),(int) radius.getRadius());
         g.drawImage(Assets.towerBasic, (int) x, (int) y, TOWERWIDTH, TOWERHEIGHT, null);
     }
 

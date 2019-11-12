@@ -19,6 +19,7 @@ public class TowerItem {
 
     public static TowerItem[] towerItems = new TowerItem[256];
     public static TowerItem towerBasicItem = new TowerBasicItem(0);
+    public static TowerItem towerFrozenItem = new TowerFrozenItem(1);
 
     public static final int ITEMWIDTH = 50, ITEMHEIGHT = 50;
 
@@ -56,6 +57,10 @@ public class TowerItem {
 
     public void setTexture(BufferedImage texture) {
         this.texture = texture;
+    }
+
+    public int getId() {
+        return id;
     }
     
     

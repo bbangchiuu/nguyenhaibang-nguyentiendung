@@ -15,6 +15,7 @@ import oop.menu.Menu;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import oop.entities.tower.TowerFrozen;
 
 /**
  *
@@ -23,7 +24,7 @@ import java.awt.Graphics;
 public class Player {
 
     public int health = 300;
-    private int money = 100;
+    public int money = 100;
     private Handler handler;
 
     private Menu menu;
@@ -31,6 +32,7 @@ public class Player {
     public boolean clickTower = false;
     private TowerManager towerManager;
     public boolean StatusLive = true;
+    public int typeItem = 0;
 
     public Player(Handler handler) {
         this.handler = handler;
@@ -74,11 +76,21 @@ public class Player {
                 //aler
             } else {
                 g.drawImage(Assets.selectTower, handler.getMouseManager().getMouseX() - 32, handler.getMouseManager().getMouseY() - 32, 64, 64, null);
-                g.drawImage(TowerItem.towerBasicItem.getTexture(), handler.getMouseManager().getMouseX() - 25, handler.getMouseManager().getMouseY() - 25, 50, 50, null);
+                if(typeItem == 0){
+                    g.drawImage(TowerItem.towerBasicItem.getTexture(), handler.getMouseManager().getMouseX() - 25, handler.getMouseManager().getMouseY() - 25, 50, 50, null);
+                }else if(typeItem == 1){
+                    g.drawImage(TowerItem.towerFrozenItem.getTexture(), handler.getMouseManager().getMouseX() - 25, handler.getMouseManager().getMouseY() - 25, 50, 50, null);
+                }               
 
                 if (!clickTower) {
-                    this.handler.getWorld().addTower(new TowerBasic(handler, handler.getMouseManager().getMouseX() - 25, handler.getMouseManager().getMouseY() - 25));
-                    this.money -= 10;
+                    if(typeItem == 0){
+                        this.handler.getWorld().addTower(new TowerBasic(handler, handler.getMouseManager().getMouseX() - 25, handler.getMouseManager().getMouseY() - 25));
+                        this.money -= 10;
+                    }else if(typeItem == 1){
+                        this.handler.getWorld().addTower(new TowerFrozen(handler, handler.getMouseManager().getMouseX() - 25, handler.getMouseManager().getMouseY() - 25));
+                        this.money -= 20;
+                    }
+             
                     hand = 0;
                 }
             }

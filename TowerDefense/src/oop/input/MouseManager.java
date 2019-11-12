@@ -42,21 +42,19 @@ public class MouseManager implements MouseListener, MouseMotionListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         if (gamestart) {
-//            for (int i = 0; i < player.getMenu().getHeight(); i++) {
-//                for (int j = 0; j < player.getMenu().getWidth(); j++) {
-//                    if (mouseX >= player.getMenu().getX()+TowerItem.ITEMWIDTH*j*1.5 + 70+70 && mouseX <= player.getMenu().getX() + TowerItem.ITEMWIDTH*j*1.5 + 70 +TowerItem.ITEMWIDTH
-//                            && mouseY >= player.getMenu().getY()+TowerItem.ITEMHEIGHT*j*1.7 + 25 && mouseY <= player.getMenu().getY() + TowerItem.ITEMHEIGHT*j*1.7 + 25+ TowerItem.ITEMHEIGHT) {
-//                        //System.out.println("ban chon: " + (player.getMenu().getHeight()*i + j));
-//                        player.hand = 1;
-//                    }
-//                    System.out.println("ban chon: " + (player.getMenu().getHeight()*i + j));
-//                }
-//            }
+
             if (mouseX >= player.getMenu().getX() + 70 && mouseX <= player.getMenu().getX() + 70 + TowerItem.ITEMWIDTH
-                    && mouseY >= player.getMenu().getY() + 25 && mouseY <= player.getMenu().getY()+ 25 + TowerItem.ITEMHEIGHT) {
+                    && mouseY >= player.getMenu().getY() + 25 && mouseY <= player.getMenu().getY()+ 25 + TowerItem.ITEMHEIGHT + 10) {
                 player.hand = 1;
                 player.clickTower = true;
-                System.out.println(player.hand);
+                player.typeItem = 0;
+            }
+            
+            if (mouseX >= player.getMenu().getX() + 70 + TowerItem.ITEMWIDTH + 20 && mouseX <= player.getMenu().getX() + 70 + TowerItem.ITEMWIDTH*2 + 30
+                    && mouseY >= player.getMenu().getY() + 25 && mouseY <= player.getMenu().getY()+ 25 + TowerItem.ITEMHEIGHT + 10) {
+                player.hand = 1;
+                player.clickTower = true;
+                player.typeItem = 1;
             }
             
             if(mouseX >= 0 && mouseX <= 1200 && mouseY >= 0 && mouseY <= 700){

@@ -41,7 +41,7 @@ public class Menu {
         g.drawImage(Assets.menuIMG, this.x, this.y, null);
 
         for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {               
+            for (int j = 0; j < height; j++) {        
                 getTowerItem(i, j).render(g, (int) (x + TowerItem.ITEMWIDTH * i * 1.5 + 70), (int) (y + TowerItem.ITEMHEIGHT * j * 1.7 + 25));
                 if(this.player.getMoney() < getTowerItem(i, j).price){
                     g.setColor(new Color(255, 0, 0, 100));
