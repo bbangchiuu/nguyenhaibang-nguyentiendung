@@ -21,7 +21,7 @@ public class MenuState extends State {
 		handler.getMouseManager().setUIManager(uiManager);//khởi tạo 1 ArrayList UIObject
 
                 //add 1 đối tượng vào trong list UIObject
-		uiManager.addObject(new UIImageButton(550, 240, 128, 64, Assets.btn_start, new ClickListener() {
+		uiManager.addObject(new UIImageButton(550, 420, 128, 64, Assets.btn_start, new ClickListener() {
 			@Override
 			public void onClick() {
                                 System.out.println("da click");
@@ -46,6 +46,7 @@ public class MenuState extends State {
 
 	@Override
 	public void render(Graphics g) {
+                g.drawImage(Assets.Screen, -10, -10, handler.getWidth() + 10, handler.getHeight(), null);
                 uiManager.render(g);
 	}
 	

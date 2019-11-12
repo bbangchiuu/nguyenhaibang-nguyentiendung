@@ -11,6 +11,8 @@ public class Assets {
 	
         public static Font font28;
         
+        public static BufferedImage Screen;
+        
 	public static BufferedImage dirt, grass, stone, tree, rock;
 	public static BufferedImage wood;
 	public static BufferedImage[] btn_start;
@@ -23,6 +25,8 @@ public class Assets {
 	public static void init(){
                 font28 = FontLoader.loadFont("res/fonts/slkscr.ttf", 28);
             
+                SpriteSheet screen = new SpriteSheet(ImageLoader.loadImage("/textures/screen.jpg"));
+                
 		SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheet.png"));
                 
                 SpriteSheet bat_monster = new SpriteSheet(ImageLoader.loadImage("/textures/batAnimationSheet.png"));
@@ -33,6 +37,8 @@ public class Assets {
                 SpriteSheet towerFZ = new SpriteSheet(ImageLoader.loadImage("/tower/FreezeTowerGraphic.png"));
                 
                 SpriteSheet select = new SpriteSheet(ImageLoader.loadImage("/tower/SellSelectGraphic.png"));
+                
+                Screen = screen.crop(0, 0, 516, 389);
                 
 		wood = sheet.crop(width, height, width, height);
 		
