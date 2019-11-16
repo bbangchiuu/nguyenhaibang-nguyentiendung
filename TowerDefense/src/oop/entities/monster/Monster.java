@@ -20,20 +20,18 @@ public abstract class Monster {
     public float x, y;
     protected Handler handler;
     public static int width = 64, height = 64;
-    protected int lvWord;
     public boolean StatusLive = true;
     public boolean StatusFinish = false;
     private int Damege;
     public float speed;
     public float xMove = 0, yMove = 0;
 
-    public Monster(float x, float y, Handler handler, int lvWord, int Damge, float speed, int heath, int money) {
+    public Monster(float x, float y, Handler handler, float speed, int Damge,  int heath, int money) {
         this.x = x;
         this.y = y;
         this.handler = handler;
-        this.lvWord = lvWord;
-        this.Damege = Damge;
         this.speed = speed;
+        this.Damege = Damge;       
         this.heath = heath;
         this.money = money;
     }

@@ -10,7 +10,6 @@ import oop.gfx.Assets;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import javafx.beans.property.DoubleProperty;
 
 /**
  *

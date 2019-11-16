@@ -3,11 +3,16 @@ package oop.worlds;
 import java.awt.Graphics;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import oop.Game;
 import oop.Handler;
 import oop.entities.Player;
+import oop.entities.bullets.Bullet;
+import oop.entities.bullets.BulletManager;
 import oop.entities.monster.BatMonster;
+import oop.entities.monster.BeetleMonster;
 import oop.entities.monster.Monster;
 import oop.entities.monster.MonsterManager;
 import oop.entities.tower.Tower;
@@ -33,17 +38,21 @@ public class World {
     private TowerManager towerManager;
     private Player player;
     private MonsterManager monsterManager;
+    private BulletManager bulletManager;
 
     private UIManager uiManager;
 
     Menu menu;
 
-    CountDownThread countDownThread;
     Thread timeDown;
 
-    public int time = 10;
+    public int time = 3;
 
-    public int lvWord = 1;
+    int typeMonster = 1;
+    int healthMonsterUp = 0;
+    int moneyMonterUp = 0;
+    
+    long timeBullet = 0;
     
     public World(Handler handler, String path) {
         this.handler = handler;
@@ -55,38 +64,47 @@ public class World {
         this.player = new Player(handler);
 
         this.monsterManager = new MonsterManager(handler, player);
-
-//        uiManager = new UIManager(handler);
-//        this.handler.getMouseManager().setUIManager(uiManager);
-//        uiManager.addObject(new UIImageButton(950, 770, 128, 64, Assets.btn_start, new ClickListener() {
-//            @Override
-//            public void onClick() {
-//                System.out.println("bat dau game");
-//
-//            }
-//        }));
+        this.bulletManager = new BulletManager(handler);
+        
         gameStart();
     }
 
     public void gameStart() {
+        
         timeDown = new Thread() {
             @Override
             public void run() {
-                int count = 10;
-                for (time = count; time > 0; time--) {;
-                    try {
-                        Thread.sleep(1000);
-                        //System.out.println("i: " + time);
-                    } catch (InterruptedException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
+                while (true) {              
+                    if(typeMonster == 2){
+                        for (int i = 0; i < 10; i++) {
+                            monsterManager.addMonster(new BeetleMonster(0, 510, handler, 
+                                    200 + healthMonsterUp, 10 + moneyMonterUp));
+                            try {
+                                this.sleep(1000);
+                            } catch (InterruptedException ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+                        typeMonster = 1;
+                    }else{
+                        for (int i = 0; i < 10; i++) {
+                            monsterManager.addMonster(new BatMonster(0, 510, handler, 
+                                    100 + healthMonsterUp, 10 + moneyMonterUp));
+                            try {
+                                this.sleep(1000);
+                            } catch (InterruptedException ex) {
+                                ex.printStackTrace();
+                            }
+                        }        
+                        typeMonster = 2;
                     }
-
-                }
-                //System.out.println("Hết giờ, Game chạy");
-                if (time <= 0) {
-                    countDownThread = new CountDownThread();
-                    countDownThread.start();                  
+                    healthMonsterUp += 100;
+                    moneyMonterUp += 5;
+                    try {
+                        this.sleep(10000);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
                 }
             }
         };
@@ -99,10 +117,17 @@ public class World {
     }
 
     public void tick() {
-        this.player.tick();
-        //uiManager.tick();
-        this.monsterManager.tick();
         Collision();
+        this.player.tick();
+        this.bulletManager.tick();
+        this.monsterManager.tick();
+        if(timeBullet <= 0){
+            timeBullet = 50;
+        }else{
+            timeBullet -= 1;
+        }
+        
+        System.out.println("thoi gian ban: " + timeBullet);
     }
 
     public void render(Graphics g) {
@@ -116,14 +141,7 @@ public class World {
 
         player.render(g);
         towerManager.render(g);
-
-        if(time > 0){
-            g.drawString("Dem nguoc: " + time, 1000, 800);
-        }else{
-            g.drawString("Start" , 1000, 800);
-        }
-        
-       //uiManager.render(g);
+        bulletManager.render(g);
         monsterManager.render(g);
     }
 
@@ -139,7 +157,6 @@ public class World {
 
             return Tile.dirtTile;
         }
-        //System.out.println("ss");
         return t;
     }
 
@@ -159,40 +176,36 @@ public class World {
 
     }
 
-    private void Collision(){
+    private void Collision() {
         for (int i = 0; i < towerManager.getTowers().size(); i++) {
             for (int j = 0; j < monsterManager.getListMonsters().size(); j++) {
-                if(CollisionX(i, j) && CollisionY(i, j)){
-                    if(towerManager.getTowers().get(i).getEffect() == 1){
-                        monsterManager.getListMonsters().get(j).speed = (float) 0.3;
+                if (CollisionX(i, j) && CollisionY(i, j)) {
+                    if(timeBullet <= 0){
+                        bulletManager.addBullet(new Bullet(handler, monsterManager.getListMonsters().get(j), towerManager.getTowers().get(i)));
                     }
-                    monsterManager.getListMonsters().get(j).heath -= towerManager.getTowers().get(i).getDamege();
-                    if(monsterManager.getListMonsters().get(j).heath <= 0){
-                        player.money += monsterManager.getListMonsters().get(j).getMoney();
-                        monsterManager.getListMonsters().remove(j);
-                    }                   
+                    
                     break;
                 }
             }
         }
     }
-    
-    public boolean CollisionX(int i, int j){
-        if(monsterManager.getListMonsters().get(j).x + Monster.width/2 >= towerManager.getTowers().get(i).NearestRangeX()
-                && monsterManager.getListMonsters().get(j).x <= towerManager.getTowers().get(i).FurthestRangeX()){
+
+    public boolean CollisionX(int i, int j) {
+        if (monsterManager.getListMonsters().get(j).x + Monster.width / 2 >= towerManager.getTowers().get(i).NearestRangeX()
+                && monsterManager.getListMonsters().get(j).x <= towerManager.getTowers().get(i).FurthestRangeX()) {
             return true;
         }
         return false;
     }
-    
-    public boolean CollisionY(int i, int j){
-        if(monsterManager.getListMonsters().get(j).y + Monster.height/2 >= towerManager.getTowers().get(i).NearestRangeY()
-                && monsterManager.getListMonsters().get(j).y <= towerManager.getTowers().get(i).FurthestRangeY()){
+
+    public boolean CollisionY(int i, int j) {
+        if (monsterManager.getListMonsters().get(j).y + Monster.height / 2 >= towerManager.getTowers().get(i).NearestRangeY()
+                && monsterManager.getListMonsters().get(j).y <= towerManager.getTowers().get(i).FurthestRangeY()) {
             return true;
         }
         return false;
     }
-    
+
     public int getWidth() {
         return width;
     }
@@ -201,23 +214,5 @@ public class World {
         return height;
     }
 
-    class CountDownThread extends Thread {
-
-        @Override
-        public void run() {
-            int count = 20;
-            for (int i = count; i > 0; i--) {
-                try {
-                    Monster monster = new BatMonster(0, 510, handler, lvWord);
-                    monsterManager.addMonster(monster);
-
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-//            System.out.println("Chạy hết quái");
-        }
-    }
+    
 }

@@ -23,17 +23,16 @@ public class BatMonster extends Monster {
     private Animation animDown, animUp, animLeft, animRight;
     protected RoadMap roadMap = new RoadMapLv1(this);
 
-    public BatMonster(float x, float y, Handler handler, int lvWord) {
-        super(x, y, handler, lvWord, 10, (float) 1, 1000, 10);
+    public BatMonster(float x, float y, Handler handler, int health, int money) {
+        super(x, y, handler, (float) 1, 10,  health, money);
 
         animLeft = new Animation(500, Assets.batMonterLeft);
         animUp = new Animation(500, Assets.batMonsterUp);
         animDown = new Animation(500, Assets.batMonsterDown); 
         animRight = new Animation(500, Assets.batMonsterRight); 
         
-        if(lvWord == 1){
-            roadMap = new RoadMapLv1(this);
-        }
+        roadMap = new RoadMapLv1(this);
+        
     }
 
     @Override

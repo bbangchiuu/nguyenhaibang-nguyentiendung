@@ -7,6 +7,7 @@ import oop.display.Display;
 import oop.gfx.Assets;
 import oop.input.KeyManager;
 import oop.input.MouseManager;
+import oop.sound.Sound_cdjv;
 import oop.states.GameState;
 import oop.states.MenuState;
 import oop.states.State;
@@ -33,6 +34,9 @@ public class Game implements Runnable {
 	
 	//Handler
 	private Handler handler;
+        
+        //Sound
+        private Sound_cdjv sound_cdjv;
 	
 	public Game(String title, int width, int height){
 		this.width = width;
@@ -40,6 +44,7 @@ public class Game implements Runnable {
 		this.title = title;
 		keyManager = new KeyManager();
                 mouseManager = new MouseManager();
+                sound_cdjv = new Sound_cdjv("res/sound/Hero_I_quit_long_time.wav");
 	}
 	
 	private void init(){
@@ -53,7 +58,7 @@ public class Game implements Runnable {
 		
                 handler = new Handler(this);		
 		
-		gameState = new GameState(handler);
+		//gameState = new GameState(handler);
 		menuState = new MenuState(handler);
 		State.setState(menuState);
 	}
@@ -88,7 +93,7 @@ public class Game implements Runnable {
 	public void run(){
 		
 		init();
-		
+                
 		int fps = 60;
 		double timePerTick = 1000000000 / fps;
 		double delta = 0;
@@ -97,7 +102,7 @@ public class Game implements Runnable {
 		long timer = 0;
 		int ticks = 0;
 		int i = 0;
-		while(running){
+		while(true){
 			now = System.nanoTime();
 			delta += (now - lastTime) / timePerTick;
 			timer += now - lastTime;
@@ -115,9 +120,7 @@ public class Game implements Runnable {
 				timer = 0;
 			}
 		}
-		
-		stop();
-		
+
 	}
 	
 	public KeyManager getKeyManager(){
@@ -137,25 +140,9 @@ public class Game implements Runnable {
 	}
 	
 	public synchronized void start(){
-		if(running){
-                    return;
-                }
-			
-		running = true;
 		thread = new Thread(this);
 		thread.start();
+                sound_cdjv.start();
 	}
-	
-	public synchronized void stop(){
-		if(!running){
-                   return; 
-                }			
-		running = false;
-		try {
-                    thread.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
-	
+
 }

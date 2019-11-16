@@ -48,13 +48,12 @@ public class MonsterManager {
 
     public void tick() {
         for (int i = 0; i < listMonsters.size(); i++) {
-
             if (listMonsters.get(i).StatusFinish) {
                 this.player.health -= listMonsters.get(i).getDamege();
-                if (this.player.health <= 0) {
-                    this.player.StatusLive = false;
-                }
                 listMonsters.remove(i);
+            } else if(listMonsters.get(i).heath <= 0){
+                listMonsters.remove(i);
+                player.money += listMonsters.get(i).getMoney();
             } else {
                 listMonsters.get(i).tick();
             }
@@ -63,8 +62,9 @@ public class MonsterManager {
     }
 
     public void render(Graphics g) {
-        for (Monster monster : listMonsters) {
-            monster.render(g);
+        for (int i = 0; i < listMonsters.size(); i++) {
+            listMonsters.get(i).render(g);
         }
+       
     }
 }

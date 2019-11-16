@@ -26,22 +26,14 @@ public class MenuState extends State {
 			public void onClick() {
                                 System.out.println("da click");
 				handler.getMouseManager().setUIManager(null);
-				State.setState(handler.getGame().gameState);
+				State.setState(new GameState(handler));
 			}
 		}));
 	}
 
 	@Override
 	public void tick() {
-            
-            //test
-//            //ấn cùng lúc chuột trái và phải thì sẽ hiên game
-//                if(handler.getMouseManager().isLeftPress() && handler.getMouseManager().isRightPress()){
-//                    State.setState(handler.getGame().gameState);
-//                }
-
             uiManager.tick();
-
 	}
 
 	@Override
