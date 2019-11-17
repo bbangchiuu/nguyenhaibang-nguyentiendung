@@ -5,6 +5,7 @@
  */
 package oop.entities.monster;
 
+import java.awt.Color;
 import java.awt.Font;
 import oop.Handler;
 import oop.gfx.Animation;
@@ -24,7 +25,7 @@ public class BatMonster extends Monster {
     protected RoadMap roadMap = new RoadMapLv1(this);
 
     public BatMonster(float x, float y, Handler handler, int health, int money) {
-        super(x, y, handler, (float) 1, 10,  health, money);
+        super(x, y, handler, (float) 1.2, 10,  health, money);
 
         animLeft = new Animation(500, Assets.batMonterLeft);
         animUp = new Animation(500, Assets.batMonsterUp);
@@ -42,13 +43,27 @@ public class BatMonster extends Monster {
         animDown.tick();
         animRight.tick();
         
+        if(timeEffec > 0){
+            timeEffec--;
+        } else {
+            effect = 0;
+        }
+        
+        if(effect == 1){
+            speed = (float) 0.5;
+        }else{
+            speed = (float) 1.2;
+        }
+       
         xMove = 0;
         yMove = 0;
         roadMap.MonsterMove();
+        
     }
 
     @Override
     public void render(Graphics g) {
+        g.setColor(Color.yellow);
         g.setFont(new Font("TimesRoman", Font.PLAIN, 15));
         g.drawString(heath + "", (int) x + 20, (int) y);
         g.drawImage(getCurrentAnimationFrame(), (int) x, (int) y, Monster.width, Monster.height, null);

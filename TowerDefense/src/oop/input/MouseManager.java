@@ -44,14 +44,16 @@ public class MouseManager implements MouseListener, MouseMotionListener {
         if (gamestart) {
 
             if (mouseX >= player.getMenu().getX() + 70 && mouseX <= player.getMenu().getX() + 70 + TowerItem.ITEMWIDTH
-                    && mouseY >= player.getMenu().getY() + 25 && mouseY <= player.getMenu().getY()+ 25 + TowerItem.ITEMHEIGHT + 10) {
+                    && mouseY >= player.getMenu().getY() + 25 && mouseY <= player.getMenu().getY()+ 25 + TowerItem.ITEMHEIGHT + 10
+                    && player.money >= 10) {
                 player.hand = 1;
                 player.clickTower = true;
                 player.typeItem = 0;
             }
             
             if (mouseX >= player.getMenu().getX() + 70 + TowerItem.ITEMWIDTH + 20 && mouseX <= player.getMenu().getX() + 70 + TowerItem.ITEMWIDTH*2 + 30
-                    && mouseY >= player.getMenu().getY() + 25 && mouseY <= player.getMenu().getY()+ 25 + TowerItem.ITEMHEIGHT + 10) {
+                    && mouseY >= player.getMenu().getY() + 25 && mouseY <= player.getMenu().getY()+ 25 + TowerItem.ITEMHEIGHT + 10
+                    && player.money >= 20) {
                 player.hand = 1;
                 player.clickTower = true;
                 player.typeItem = 1;

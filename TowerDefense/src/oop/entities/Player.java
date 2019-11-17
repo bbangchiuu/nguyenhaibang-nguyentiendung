@@ -65,16 +65,13 @@ public class Player {
     }
 
     public void render(Graphics g) {
-        g.setColor(Color.yellow);
-        g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
-        g.drawString("Health: " + this.health, 100, 750);
-        g.drawString("Money: " + this.money + "$", 100, 800);
+       
         this.menu.render(g);
 
         if (hand == 1) {
-            if (this.money < 10) {
-                //aler
-            } else {
+//            if (this.money < 10) {
+//                //aler
+//            } else {
                 g.drawImage(Assets.selectTower, handler.getMouseManager().getMouseX() - 32, handler.getMouseManager().getMouseY() - 32, 64, 64, null);
                 if(typeItem == 0){
                     g.drawImage(TowerItem.towerBasicItem.getTexture(), handler.getMouseManager().getMouseX() - 25, handler.getMouseManager().getMouseY() - 25, 50, 50, null);
@@ -93,10 +90,14 @@ public class Player {
              
                     hand = 0;
                 }
-            }
+//            }
 
         }
-
+        
+        g.setColor(Color.yellow);
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
+        g.drawString("Health: " + this.health, 100, 750);
+        g.drawString("Money: " + this.money + "$", 100, 800);
     }
 
     public void tick() {

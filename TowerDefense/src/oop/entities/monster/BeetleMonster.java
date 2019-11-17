@@ -5,6 +5,7 @@
  */
 package oop.entities.monster;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -42,6 +43,18 @@ public class BeetleMonster extends Monster {
         animDown.tick();
         animRight.tick();
         
+        if(timeEffec > 0){
+            timeEffec--;
+        } else {
+            effect = 0;
+        }
+        
+        if(effect == 1){
+            speed = (float) 0.5;
+        }else{
+            speed = 1;
+        }
+        
         xMove = 0;
         yMove = 0;
         roadMap.MonsterMove();
@@ -49,6 +62,7 @@ public class BeetleMonster extends Monster {
 
     @Override
     public void render(Graphics g) {
+        g.setColor(Color.yellow);
         g.setFont(new Font("TimesRoman", Font.PLAIN, 15));
         g.drawString(heath + "", (int) x + 20, (int) y);
         g.drawImage(getCurrentAnimationFrame(), (int) x, (int) y, Monster.width, Monster.height, null);

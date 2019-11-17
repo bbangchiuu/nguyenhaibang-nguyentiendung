@@ -142,7 +142,7 @@ public class Game implements Runnable {
 	public synchronized void start(){
 		thread = new Thread(this);
 		thread.start();
-                sound_cdjv.start();
+                //sound_cdjv.start();
 	}
 
 }

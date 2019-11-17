@@ -16,7 +16,7 @@ public class Assets {
 	public static BufferedImage dirt, grass, stone, rock;
 	public static BufferedImage[] btn_start;
         
-        public static BufferedImage bulletBasic;
+        public static BufferedImage bulletBasic, freezeBulllet;
         public static BufferedImage towerBasic, towerFrozen, menuIMG;
         public static BufferedImage selectTower;
         
@@ -43,7 +43,9 @@ public class Assets {
                 SpriteSheet towerBS = new SpriteSheet(ImageLoader.loadImage("/tower/SniperTowerGraphic.png"));
                 SpriteSheet towerFZ = new SpriteSheet(ImageLoader.loadImage("/tower/FreezeTowerGraphic.png"));
                 
-                SpriteSheet bullet = new SpriteSheet(ImageLoader.loadImage("/tower/BasicTowerProjectileGraphic.png"));
+                SpriteSheet BasicBullet = new SpriteSheet(ImageLoader.loadImage("/tower/BasicBullet.png"));
+                SpriteSheet FreezeBullet = new SpriteSheet(ImageLoader.loadImage("/tower/FreezeBullet.png"));
+                //SpriteSheet Bullet = new SpriteSheet(ImageLoader.loadImage("/tower/bullet1.png"));
                 
                 SpriteSheet select = new SpriteSheet(ImageLoader.loadImage("/tower/SellSelectGraphic.png"));
                 
@@ -63,7 +65,8 @@ public class Assets {
                 towerFrozen = towerFZ.crop(0, 0, 33, 26);
                 selectTower = select.crop(0, 0, 38, 38);
                 
-                bulletBasic = bullet.crop(0, 0, 22, 8);
+                bulletBasic = BasicBullet.crop(0, 0, 15, 7);
+                freezeBulllet = FreezeBullet.crop(0, 0, 22, 8);
                 
                 batMonsterDown = new BufferedImage[3];
                 batMonsterDown[0] = bat_monster.crop(sizeBatMonster, 0, sizeMonster, sizeMonster);

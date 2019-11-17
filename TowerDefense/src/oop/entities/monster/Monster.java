@@ -25,6 +25,8 @@ public abstract class Monster {
     private int Damege;
     public float speed;
     public float xMove = 0, yMove = 0;
+    public int effect = 0;
+    public int timeEffec = 50;
 
     public Monster(float x, float y, Handler handler, float speed, int Damge,  int heath, int money) {
         this.x = x;
@@ -38,15 +40,6 @@ public abstract class Monster {
     
     public abstract void tick();
     public abstract void render(Graphics g);
-    
-    public void MonsterMove(){
-        
-        if(x >= 120){
-            y -= 0.5;
-        }else{
-            x += 0.5;
-        }
-    }
 
     public int getDamege() {
         return Damege;

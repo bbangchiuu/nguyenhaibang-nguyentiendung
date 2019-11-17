@@ -89,7 +89,7 @@ public class RoadMapLv1 extends RoadMap {
                 monster.yMove = monster.speed;
             }
         } else if (stage[8]) {
-            if (monster.x >= 1100) {
+            if (monster.x >= 1200) {
                 stage[8] = false;
                 monster.StatusFinish = true;
             } else {

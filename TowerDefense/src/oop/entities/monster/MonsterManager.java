@@ -52,8 +52,8 @@ public class MonsterManager {
                 this.player.health -= listMonsters.get(i).getDamege();
                 listMonsters.remove(i);
             } else if(listMonsters.get(i).heath <= 0){
-                listMonsters.remove(i);
                 player.money += listMonsters.get(i).getMoney();
+                listMonsters.remove(i);              
             } else {
                 listMonsters.get(i).tick();
             }

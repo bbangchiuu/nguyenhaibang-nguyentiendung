@@ -45,15 +45,15 @@ public class World {
     Menu menu;
 
     Thread timeDown;
-
-    public int time = 3;
-
+    public int time = 10;
+    GameStart gameStart;
+    
     int typeMonster = 1;
     int healthMonsterUp = 0;
     int moneyMonterUp = 0;
-    
+
     long timeBullet = 0;
-    
+
     public World(Handler handler, String path) {
         this.handler = handler;
 
@@ -65,47 +65,26 @@ public class World {
 
         this.monsterManager = new MonsterManager(handler, player);
         this.bulletManager = new BulletManager(handler);
-        
-        gameStart();
+
+        countdown_time();
     }
 
-    public void gameStart() {
-        
+    public void countdown_time() {
+
         timeDown = new Thread() {
             @Override
             public void run() {
-                while (true) {              
-                    if(typeMonster == 2){
-                        for (int i = 0; i < 10; i++) {
-                            monsterManager.addMonster(new BeetleMonster(0, 510, handler, 
-                                    200 + healthMonsterUp, 10 + moneyMonterUp));
-                            try {
-                                this.sleep(1000);
-                            } catch (InterruptedException ex) {
-                                ex.printStackTrace();
-                            }
-                        }
-                        typeMonster = 1;
-                    }else{
-                        for (int i = 0; i < 10; i++) {
-                            monsterManager.addMonster(new BatMonster(0, 510, handler, 
-                                    100 + healthMonsterUp, 10 + moneyMonterUp));
-                            try {
-                                this.sleep(1000);
-                            } catch (InterruptedException ex) {
-                                ex.printStackTrace();
-                            }
-                        }        
-                        typeMonster = 2;
-                    }
-                    healthMonsterUp += 100;
-                    moneyMonterUp += 5;
+                time = 5;
+                for (int i = time; i >= 0; i--) {
+                    time--;
                     try {
-                        this.sleep(10000);
-                    } catch (Exception ex) {
+                        this.sleep(1000);
+                    } catch (InterruptedException ex) {
                         ex.printStackTrace();
                     }
                 }
+                gameStart = new GameStart();
+                gameStart.start();
             }
         };
         timeDown.start();
@@ -121,12 +100,12 @@ public class World {
         this.player.tick();
         this.bulletManager.tick();
         this.monsterManager.tick();
-        if(timeBullet <= 0){
+        if (timeBullet <= 0) {
             timeBullet = 50;
-        }else{
+        } else {
             timeBullet -= 1;
         }
-        
+
         System.out.println("thoi gian ban: " + timeBullet);
     }
 
@@ -140,6 +119,11 @@ public class World {
         }
 
         player.render(g);
+        if(time >= 0 ){
+            g.drawString("Bạn còn: " + time, 950, 770);
+        }else{
+            g.drawString("Run", 950, 770);
+        }
         towerManager.render(g);
         bulletManager.render(g);
         monsterManager.render(g);
@@ -180,10 +164,10 @@ public class World {
         for (int i = 0; i < towerManager.getTowers().size(); i++) {
             for (int j = 0; j < monsterManager.getListMonsters().size(); j++) {
                 if (CollisionX(i, j) && CollisionY(i, j)) {
-                    if(timeBullet <= 0){
+                    if (timeBullet <= 0) {
                         bulletManager.addBullet(new Bullet(handler, monsterManager.getListMonsters().get(j), towerManager.getTowers().get(i)));
                     }
-                    
+
                     break;
                 }
             }
@@ -214,5 +198,41 @@ public class World {
         return height;
     }
 
-    
+    class GameStart extends Thread {
+
+        public void run() {
+            while (true) {
+                if (typeMonster == 2) {
+                    for (int i = 0; i < 10; i++) {
+                        monsterManager.addMonster(new BeetleMonster(0, 510, handler,
+                                200 + healthMonsterUp, 10 + moneyMonterUp));
+                        try {
+                            this.sleep(1000);
+                        } catch (InterruptedException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                    typeMonster = 1;
+                } else {
+                    for (int i = 0; i < 10; i++) {
+                        monsterManager.addMonster(new BatMonster(0, 510, handler,
+                                100 + healthMonsterUp, 10 + moneyMonterUp));
+                        try {
+                            this.sleep(1000);
+                        } catch (InterruptedException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                    typeMonster = 2;
+                }
+                healthMonsterUp += 100;
+                moneyMonterUp += 5;
+                try {
+                    this.sleep(10000);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+    }
 }
