@@ -11,7 +11,7 @@ public class Assets {
 	
         public static Font font28;
         
-        public static BufferedImage Screen;
+        public static BufferedImage Screen, NewGame;
         
 	public static BufferedImage dirt, grass, stone, rock;
 	public static BufferedImage[] btn_start;
@@ -32,6 +32,7 @@ public class Assets {
                 font28 = FontLoader.loadFont("res/fonts/slkscr.ttf", 28);
             
                 SpriteSheet screen = new SpriteSheet(ImageLoader.loadImage("/textures/screen.jpg"));
+                SpriteSheet newgame = new SpriteSheet(ImageLoader.loadImage("/textures/MenuBar.png"));
                 
 		SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheet.png"));
                 
@@ -50,6 +51,7 @@ public class Assets {
                 SpriteSheet select = new SpriteSheet(ImageLoader.loadImage("/tower/SellSelectGraphic.png"));
                 
                 Screen = screen.crop(0, 0, 516, 389);
+                NewGame = newgame.crop(0, 0, 286, 56);
 		
 		btn_start = new BufferedImage[2];
 		btn_start[0] = sheet.crop(width * 6, height * 4, width * 2, height);

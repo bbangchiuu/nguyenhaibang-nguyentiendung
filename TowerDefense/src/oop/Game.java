@@ -44,6 +44,7 @@ public class Game implements Runnable {
 		this.title = title;
 		keyManager = new KeyManager();
                 mouseManager = new MouseManager();
+                //sound_cdjv = new Sound_cdjv("res/sound/Hurricangers.wav");
                 sound_cdjv = new Sound_cdjv("res/sound/Hero_I_quit_long_time.wav");
 	}
 	
@@ -142,7 +143,7 @@ public class Game implements Runnable {
 	public synchronized void start(){
 		thread = new Thread(this);
 		thread.start();
-                //sound_cdjv.start();
+                sound_cdjv.start();
 	}
 
 }

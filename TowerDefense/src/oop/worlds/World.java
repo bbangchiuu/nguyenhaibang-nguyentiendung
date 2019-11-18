@@ -21,10 +21,12 @@ import oop.entities.tower.TowerManager;
 import oop.gfx.Assets;
 import oop.menu.Menu;
 import oop.roadmap.RoadMapLv1;
+import oop.states.GameState;
 import oop.states.State;
 import oop.tiles.Tile;
 import oop.ui.ClickListener;
 import oop.ui.UIImageButton;
+import oop.ui.UIImageButton_NewGame;
 import oop.ui.UIManager;
 import oop.utils.Utils;
 
@@ -40,19 +42,21 @@ public class World {
     private MonsterManager monsterManager;
     private BulletManager bulletManager;
 
-    private UIManager uiManager;
+    private UIImageButton_NewGame newgame;
 
     Menu menu;
 
     Thread timeDown;
     public int time = 10;
     GameStart gameStart;
-    
+
     int typeMonster = 1;
     int healthMonsterUp = 0;
     int moneyMonterUp = 0;
 
     long timeBullet = 0;
+
+    boolean NewGame = false;
 
     public World(Handler handler, String path) {
         this.handler = handler;
@@ -66,6 +70,13 @@ public class World {
         this.monsterManager = new MonsterManager(handler, player);
         this.bulletManager = new BulletManager(handler);
 
+        newgame = new UIImageButton_NewGame(handler, new ClickListener() {
+            @Override
+            public void onClick() {
+                State.setState(new GameState(handler));
+            }
+        });
+        handler.getMouseManager().setNewGame(newgame);
         countdown_time();
     }
 
@@ -74,7 +85,7 @@ public class World {
         timeDown = new Thread() {
             @Override
             public void run() {
-                time = 5;
+                time = 30;
                 for (int i = time; i >= 0; i--) {
                     time--;
                     try {
@@ -91,22 +102,27 @@ public class World {
     }
 
     public void addTower(Tower tower) {
-        System.out.println("da them");
         towerManager.addTower(tower);
     }
 
     public void tick() {
-        Collision();
-        this.player.tick();
-        this.bulletManager.tick();
-        this.monsterManager.tick();
-        if (timeBullet <= 0) {
-            timeBullet = 50;
+        if (player.StatusLive) {
+            Collision();
+            this.player.tick();
+            this.bulletManager.tick();
+            this.monsterManager.tick();
+            if (timeBullet <= 0) {
+                timeBullet = 50;
+            } else {
+                timeBullet -= 1;
+            }
+
+            System.out.println("thoi gian ban: " + timeBullet);
         } else {
-            timeBullet -= 1;
+            NewGame = true;
+            newgame.tick();
         }
 
-        System.out.println("thoi gian ban: " + timeBullet);
     }
 
     public void render(Graphics g) {
@@ -119,14 +135,18 @@ public class World {
         }
 
         player.render(g);
-        if(time >= 0 ){
+        if (time >= 0) {
             g.drawString("Bạn còn: " + time, 950, 770);
-        }else{
+        } else {
             g.drawString("Run", 950, 770);
         }
         towerManager.render(g);
         bulletManager.render(g);
         monsterManager.render(g);
+
+        if (NewGame) {
+            newgame.render(g);
+        }
     }
 
     public Tile getTile(int x, int y) {
@@ -232,7 +252,12 @@ public class World {
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
+                
+                if(NewGame){
+                    break;
+                }
             }
+            
         }
     }
 }

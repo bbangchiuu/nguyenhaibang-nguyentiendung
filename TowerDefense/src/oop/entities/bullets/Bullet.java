@@ -39,7 +39,7 @@ public class Bullet {
         this.tower = tower;
         this.damge = 10;
         x = tower.getX() + Tower.TOWERWIDTH / 2;
-        y = tower.getY() + Tower.TOWERHEIGHT / 2;
+        y = tower.getY() + Tower.TOWERHEIGHT / 4;
         damge = tower.getDamege();
         effect = tower.getEffect();
         timeEffect = tower.timeEffect;
@@ -50,14 +50,8 @@ public class Bullet {
             System.out.println("da chet");
             statusFinish = true;
         } else {
-            float setX = (monster.x >= tower.getX()) ? monster.x - tower.getX() : tower.getX() - monster.x;
-            float setY = (monster.y >= tower.getX()) ? monster.y - tower.getY() : tower.getY() - monster.y;
-            float hypotenuse = (float) Math.sqrt(Math.pow(setX, 2) + Math.pow(setY, 2));
 
-            sinX = setY / hypotenuse;
-            cosX = setX / hypotenuse;
-
-            if (monster.x >= tower.getX()) {
+            if (monster.x + Monster.width/2 >= tower.getX() + Tower.TOWERWIDTH) {
                 x += speed;
                 if (x > monster.x) {
                     x = monster.x;
@@ -68,15 +62,16 @@ public class Bullet {
                     x = monster.x + monster.width / 2;
                 }
             }
-            if (monster.y >= tower.getX()) {
+            
+            if (monster.y + Monster.height/2 > tower.getY() + Tower.TOWERHEIGHT/2) {
                 y += speed;
-                if (y > monster.y + monster.height) {
-                    y = monster.y + monster.height;
+                if (y > monster.y) {
+                    y = monster.y;
                 }
             } else {
                 y -= speed;
-                if (y < monster.y) {
-                    y = monster.y;
+                if (y < monster.y + monster.height) {
+                    y = monster.y + monster.height;
                 }
             }
 

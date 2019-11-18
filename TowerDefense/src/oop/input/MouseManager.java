@@ -11,6 +11,7 @@ import oop.ui.UIManager;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import oop.ui.UIImageButton_NewGame;
 
 /**
  *
@@ -21,6 +22,7 @@ public class MouseManager implements MouseListener, MouseMotionListener {
     private boolean leftPress, rightPress;
     private int mouseX, mouseY;
     private UIManager uiManager;
+    private UIImageButton_NewGame button_NewGame;
     boolean gamestart = false;
 
     Player player;
@@ -39,6 +41,10 @@ public class MouseManager implements MouseListener, MouseMotionListener {
         this.uiManager = uiManager;
     }
 
+    public void setNewGame(UIImageButton_NewGame button_NewGame){
+        this.button_NewGame = button_NewGame;
+    }
+    
     @Override
     public void mouseClicked(MouseEvent e) {
         if (gamestart) {
@@ -90,6 +96,10 @@ public class MouseManager implements MouseListener, MouseMotionListener {
             //System.out.println("khac null");
             uiManager.onMouseRelease(e);
         }
+        
+        if(button_NewGame != null){
+            button_NewGame.onMouseRelease(e);
+        }
     }
 
     @Override
@@ -111,6 +121,10 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 
         if (uiManager != null) {
             uiManager.onMouseMove(e);
+        }
+        
+        if(button_NewGame != null){
+            button_NewGame.onMouseMove(e);
         }
     }
 
