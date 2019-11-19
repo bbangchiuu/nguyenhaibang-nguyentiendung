@@ -22,7 +22,6 @@ import oop.roadmap.RoadMapLv1;
 public class BatMonster extends Monster {
 
     private Animation animDown, animUp, animLeft, animRight;
-    protected RoadMap roadMap = new RoadMapLv1(this);
 
     public BatMonster(float x, float y, Handler handler, int health, int money) {
         super(x, y, handler, (float) 1.2, 10,  health, money);
@@ -57,8 +56,7 @@ public class BatMonster extends Monster {
        
         xMove = 0;
         yMove = 0;
-        roadMap.MonsterMove();
-        
+        roadMap.MonsterMove();       
     }
 
     @Override

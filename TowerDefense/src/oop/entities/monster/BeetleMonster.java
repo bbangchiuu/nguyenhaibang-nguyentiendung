@@ -22,7 +22,6 @@ import oop.roadmap.RoadMapLv1;
 public class BeetleMonster extends Monster {
 
     private Animation animDown, animUp, animLeft, animRight;
-    protected RoadMap roadMap = new RoadMapLv1(this);
 
     public BeetleMonster(float x, float y, Handler handler, int health, int money) {
         super(x, y, handler, (float) 1, 10, health, money);

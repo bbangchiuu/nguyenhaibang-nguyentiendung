@@ -27,7 +27,8 @@ public abstract class Monster {
     public float xMove = 0, yMove = 0;
     public int effect = 0;
     public int timeEffec = 50;
-
+    protected RoadMap roadMap = new RoadMapLv1(this);
+    
     public Monster(float x, float y, Handler handler, float speed, int Damge,  int heath, int money) {
         this.x = x;
         this.y = y;

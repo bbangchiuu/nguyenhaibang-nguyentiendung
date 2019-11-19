@@ -73,7 +73,9 @@ public class World {
         newgame = new UIImageButton_NewGame(handler, new ClickListener() {
             @Override
             public void onClick() {
-                State.setState(new GameState(handler));
+                if(NewGame){
+                    State.setState(new GameState(handler));
+                }               
             }
         });
         handler.getMouseManager().setNewGame(newgame);

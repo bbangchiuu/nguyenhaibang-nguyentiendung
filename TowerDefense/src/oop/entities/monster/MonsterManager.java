@@ -48,6 +48,13 @@ public class MonsterManager {
 
     public void tick() {
         for (int i = 0; i < listMonsters.size(); i++) {
+//            if(i > 0){
+//                if(listMonsters.get(i).x + Monster.width >= listMonsters.get(i-1).x && listMonsters.get(i).x + Monster.width <= listMonsters.get(i-1).x + Monster.width
+//                        && listMonsters.get(i).y >= listMonsters.get(i-1).y && listMonsters.get(i).y <= listMonsters.get(i-1).y + Monster.height){
+//                    continue;
+//                }
+//            }
+            
             if (listMonsters.get(i).StatusFinish) {
                 this.player.health -= listMonsters.get(i).getDamege();
                 listMonsters.remove(i);
