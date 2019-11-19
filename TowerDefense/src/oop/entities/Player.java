@@ -98,7 +98,7 @@ public class Player {
     }
 
     public void tick() {
-        handler.getMouseManager().setBuyTower(this);
+        handler.getMouseManager().setBuyTower(handler, this);
         if(health <= 0){
             StatusLive = false;
         }

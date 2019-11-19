@@ -42,21 +42,7 @@ public class BatMonster extends Monster {
         animDown.tick();
         animRight.tick();
         
-        if(timeEffec > 0){
-            timeEffec--;
-        } else {
-            effect = 0;
-        }
-        
-        if(effect == 1){
-            speed = (float) 0.5;
-        }else{
-            speed = (float) 1.2;
-        }
-       
-        xMove = 0;
-        yMove = 0;
-        roadMap.MonsterMove();       
+               
     }
 
     @Override

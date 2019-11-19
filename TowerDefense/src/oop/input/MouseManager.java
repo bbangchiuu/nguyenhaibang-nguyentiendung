@@ -11,6 +11,8 @@ import oop.ui.UIManager;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import oop.Handler;
+import oop.tiles.Tile;
 import oop.ui.UIImageButton_NewGame;
 
 /**
@@ -24,17 +26,18 @@ public class MouseManager implements MouseListener, MouseMotionListener {
     private UIManager uiManager;
     private UIImageButton_NewGame button_NewGame;
     boolean gamestart = false;
-
+    
+    Handler handler;
     Player player;
 
     public MouseManager() {
 
     }
 
-    public void setBuyTower(Player player) {
+    public void setBuyTower(Handler handler, Player player) {
         gamestart = true;
+        this.handler = handler;
         this.player = player;
-
     }
 
     public void setUIManager(UIManager uiManager) {
@@ -66,11 +69,12 @@ public class MouseManager implements MouseListener, MouseMotionListener {
             }
             
             if(mouseX >= 0 && mouseX <= 1200 && mouseY >= 0 && mouseY <= 700){
-                player.clickTower = false;
+                //if(handler.getWorld().getTile(mouseX/Tile.TILEWIDTH, mouseY/Tile.TILEHEIGHT).isSolid())
+                    player.clickTower = false;
             }
         }
     }
-
+    
     @Override
     public void mousePressed(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1) {

@@ -41,22 +41,7 @@ public class BeetleMonster extends Monster {
         animUp.tick();
         animDown.tick();
         animRight.tick();
-        
-        if(timeEffec > 0){
-            timeEffec--;
-        } else {
-            effect = 0;
-        }
-        
-        if(effect == 1){
-            speed = (float) 0.5;
-        }else{
-            speed = 1;
-        }
-        
-        xMove = 0;
-        yMove = 0;
-        roadMap.MonsterMove();
+
     }
 
     @Override
